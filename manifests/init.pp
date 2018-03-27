@@ -14,6 +14,7 @@ class artifactory(
   Optional[String] $db_url                                                   = undef,
   Optional[String] $db_username                                              = undef,
   Optional[String] $db_password                                              = undef,
+  Optional[String] $db_encrypted_password                                    = undef,
   Optional[Enum['filesystem', 'fullDb','cachedFS']] $binary_provider_type    = undef,
   Optional[Integer] $pool_max_active                                         = undef,
   Optional[Integer] $pool_max_idle                                           = undef,
