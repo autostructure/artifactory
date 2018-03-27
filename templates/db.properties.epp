@@ -2,6 +2,7 @@
       String                                                  $db_url,
       String                                                  $db_username,
       String                                                  $db_password,
+      Optional[String]                                        $db_encrypted_password          = undef,
       Enum['filesystem', 'fullDb','cachedFS']                 $binary_provider_type           = 'filesystem',
       Optional[Integer]                                       $pool_max_active                = undef,
       Optional[Integer]                                       $pool_max_idle                  = undef,
@@ -44,7 +45,11 @@ driver=<%= $db_driver %>
 url=<%= $db_url %>
 <% if $db_type != 'derby' { -%>
 username=<%= $db_username %>
+<% if $db_encrypted_password { -%>
+password=<%= $db_encrypted_password %>
+<% } else { -%>
 password=<%= $db_password %>
+<% } -%>
 <% } -%>
 
 ## Determines where the actual artifacts binaries are stored. Available options:

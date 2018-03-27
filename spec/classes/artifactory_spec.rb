@@ -57,7 +57,8 @@ describe 'artifactory' do
 
           it {
             is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/db.properties').with(
-              'ensure' => 'file',
+              'ensure'  => 'file',
+              'content' => %r{^password=password$},
             )
           }
 
@@ -67,6 +68,26 @@ describe 'artifactory' do
               'target' => '/var/opt/jfrog/artifactory/etc/db.properties',
             )
           }
+        end
+
+        context 'artifactory class with db_encrypted_password set' do
+          let(:params) do
+            {
+              'jdbc_driver_url'       => 'puppet:///modules/my_module/mysql.jar',
+              'db_url'                => 'oracle://some_url',
+              'db_username'           => 'username',
+              'db_password'           => 'password',
+              'db_encrypted_password' => 'encrypted_password',
+              'db_type'               => 'oracle',
+            }
+          end
+
+          it { is_expected.to compile.with_all_deps }
+          it do
+            is_expected.to contain_file('/var/opt/jfrog/artifactory/etc/db.properties').with_content(
+              %r{^password=encrypted_password$},
+            )
+          end
         end
 
         context 'artifactory class with manage_java set to false' do

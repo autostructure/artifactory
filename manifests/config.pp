@@ -22,6 +22,7 @@ class artifactory::config {
             db_url                         => $::artifactory::db_url,
             db_username                    => $::artifactory::db_username,
             db_password                    => $::artifactory::db_password,
+            db_encrypted_password          => $::artifactory::db_encrypted_password,
             db_type                        => $::artifactory::db_type,
             binary_provider_type           => $::artifactory::binary_provider_type,
             pool_max_active                => $::artifactory::pool_max_active,

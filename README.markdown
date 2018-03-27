@@ -135,6 +135,11 @@ Only required for database configuration. The username for the database account.
 
 Only required for database configuration. The password for the database account.
 
+##### `db_encrypted_password`
+
+The artifactory encrypted form of db\_password.  On startup, newer versions of artifactory use a 'master key' to encrypt the db\_password in the db.properties file and rewrite the file.
+After you have installed artifactory (and you know the encrypted form), set this value to stop puppet restarting artifactory every 30 minutes.
+
 ##### `binary_provider_type`
 
 Optional setting for the binary storage provider. The type of database to configure for. Valid values are 'filesystem', 'fullDb', 'cachedFS', 'S3'. Defaults to 'filesystem'.
