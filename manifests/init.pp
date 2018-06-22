@@ -3,6 +3,7 @@
 #
 #
 class artifactory(
+  String $artifactory_home                                                   = '/var/opt/jfrog/artifactory',
   Boolean $manage_java                                                       = true,
   Boolean $manage_repo                                                       = true,
   String $yum_name                                                           = 'bintray-jfrog-artifactory-rpms',
@@ -21,7 +22,6 @@ class artifactory(
   Optional[String] $binary_provider_filesystem_dir                           = undef,
   Optional[String] $binary_provider_cache_dir                                = undef,
 ) {
-  $artifactory_home = '/var/opt/jfrog/artifactory'
 
   $service_name = 'artifactory'
 
