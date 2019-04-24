@@ -9,6 +9,10 @@
   "issues_url": "https://github.com/autostructure/artifactory/issues",
   "dependencies": [
     {
+      "name": "puppetlabs-yumrepo_core",
+      "version_requirement": ">= 1.0.0 <= 2.0.0"
+    },
+    {
       "name": "puppetlabs-java",
       "version_requirement": ">= 1.5.0 <= 3.0.0"
     },
