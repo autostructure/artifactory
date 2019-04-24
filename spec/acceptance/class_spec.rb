@@ -9,8 +9,7 @@ describe 'artifactory class' do
       ARTIFACTORY_TEST
 
       # Run it twice and test for idempotency
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
+      apply_manifest_and_idempotent(pp)
     end
 
     describe package('jfrog-artifactory-oss') do
