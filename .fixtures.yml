@@ -2,7 +2,7 @@ fixtures:
   forge_modules:
     stdlib:       "puppetlabs/stdlib"
     java:         "puppetlabs/java"
-    wget:         "puppet/wget"
     yumrepo_core: "puppetlabs/yumrepo_core"
+    wget:         "puppet/wget"
   symlinks:
-    artifactory: "#{source_dir}"
+    artifactory:  "#{source_dir}"
