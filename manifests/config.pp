@@ -44,10 +44,10 @@ class artifactory::config {
         group   => 'artifactory',
       }
 
-      file { "${::artifactory::artifactory_home}/etc/storage.properties":
-        ensure => link,
-        target => "${::artifactory::artifactory_home}/etc/.secrets/.temp.db.properties",
-      }
+      # file { "${::artifactory::artifactory_home}/etc/storage.properties":
+      #   ensure => link,
+      #   target => "${::artifactory::artifactory_home}/etc/.secrets/.temp.db.properties",
+      # }
       file { "${::artifactory::artifactory_home}/etc/binarystore.xml":
         ensure  => file,
         content => epp(
