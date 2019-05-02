@@ -46,7 +46,7 @@ class artifactory::config {
 
       file { "${::artifactory::artifactory_home}/etc/storage.properties":
         ensure => link,
-        target => "${::artifactory::artifactory_home}/etc/db.properties",
+        target => "${::artifactory::artifactory_home}/etc/.secrets/.temp.db.properties",
       }
       file { "${::artifactory::artifactory_home}/etc/binarystore.xml":
         ensure  => file,
