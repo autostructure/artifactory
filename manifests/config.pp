@@ -91,4 +91,11 @@ class artifactory::config {
       group   => 'artifactory',
     }
   }
+  file_line { 'artifactory_home':
+      ensure => present,
+      path   => '/etc/opt/jfrog/artifactory/default',
+      line   => "export ARTIFACTORY_HOME=${::artifactory::artifactory_home}",
+      match  => 'export ARTIFACTORY_HOME='
+
+      }
 }
