@@ -9,6 +9,7 @@ class artifactory(
   String $yum_baseurl                                                                      = 'http://jfrog.bintray.com/artifactory-rpms',
   String $package_name                                                                     = 'jfrog-artifactory-oss',
   String $package_version                                                                  = 'present',
+  String $artifactory_home                                                                 = '/var/opt/jfrog/artifactory',
   Optional[String] $jdbc_driver_url                                                        = undef,
   Optional[Enum['derby', 'mssql', 'mysql', 'oracle', 'postgresql']] $db_type               = undef,
   Optional[String] $db_url                                                                 = undef,
@@ -21,8 +22,8 @@ class artifactory(
   Optional[String] $binary_provider_base_data_dir                                          = undef,
   Optional[String] $binary_provider_filesystem_dir                                         = undef,
   Optional[String] $binary_provider_cache_dir                                              = undef,
+  Optional[String] $master_key                                                             = '7640a6f2d365b6bd970ab2659882f8f6',
 ) {
-  $artifactory_home = '/var/opt/jfrog/artifactory'
 
   $service_name = 'artifactory'
 
