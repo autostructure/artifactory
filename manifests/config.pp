@@ -48,7 +48,7 @@ class artifactory::config {
       #   ensure => link,
       #   target => "${::artifactory::artifactory_home}/etc/.secrets/.temp.db.properties",
       # }
-      file { "/etc/${::artifasctory::artifactory_home}/binarystore.xml":
+      file { "${::artifasctory::artifactory_home}/etc/binarystore.xml":
         ensure  => file,
         content => epp(
           'artifactory/binarystore.xml.epp',
@@ -77,13 +77,13 @@ class artifactory::config {
     }
   }
   if ($::artifactory::master_key) {
-    file { "/etc/${::artifactory::artifactory_home}/security":
+    file { "${::artifactory::artifactory_home}/etc/security":
       ensure => directory,
       owner  => 'artifactory',
       group  => 'artifactory',
     }
 
-    file { "/etc/${::artifactory::artifactory_home}/security/master.key":
+    file { "${::artifactory::artifactory_home}/etc/security/master.key":
       ensure  => file,
       content => $::artifactory::master_key,
       mode    => '0640',
@@ -91,11 +91,11 @@ class artifactory::config {
       group   => 'artifactory',
     }
   }
-  exec { 'artifactory home':
-      command => "export ARTIFACTORY_HOME=${::artifactory::artifactory_home}",
-      path    => '/opt/jfrog/artifactory/tomcat/bin/',
-      user    => 'artifactory',
-  }
+  # exec { 'artifactory home':
+  #     command => "export ARTIFACTORY_HOME=${::artifactory::artifactory_home}",
+  #     path    => '/opt/jfrog/artifactory/tomcat/bin/',
+  #     user    => 'artifactory',
+  # }
   # file_line { 'artifactory_home':0
   #     ensure => present,
   #     path   => '/etc/opt/jfrog/artifactory/default',
