@@ -91,11 +91,16 @@ class artifactory::config {
       group   => 'artifactory',
     }
   }
-  file_line { 'artifactory_home':
-      ensure => present,
-      path   => '/etc/opt/jfrog/artifactory/default',
-      line   => "export ARTIFACTORY_HOME=${::artifactory::artifactory_home}",
-      match  => 'export ARTIFACTORY_HOME='
-
-      }
+  exec { 'artifactory home':
+      command => "export ARTIFACTORY_HOME=${::artifactory::artifactory_home}",
+      path    => '/opt/jfrog/artifactory/tomcat/bin/',
+      user    => 'artifactory',
+  }
+  # file_line { 'artifactory_home':0
+  #     ensure => present,
+  #     path   => '/etc/opt/jfrog/artifactory/default',
+  #     line   => "export ARTIFACTORY_HOME=${::artifactory::artifactory_home}",
+  #     match  => 'export ARTFACTORY_HOME='
+  #
+  #     }
 }
