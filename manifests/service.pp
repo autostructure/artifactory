@@ -1,11 +1,12 @@
-# # == Class artifactory::service
-# #
-# # This class is meant to be called from artifactory.
-# # It ensure the service is running.
-# #
-# class artifactory::service {
+# == Class artifactory::service
 #
-#   service { 'artifactory':
-#     ensure => stopped,
-#   }
-# }
+# This class is meant to be called from artifactory.
+# It ensure the service is running.
+#
+class artifactory::service {
+
+  service { 'artifactory':
+    ensure  => running,
+    enabled => true,
+  }
+}

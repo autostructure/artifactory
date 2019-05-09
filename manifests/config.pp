@@ -9,6 +9,7 @@ class artifactory::config {
     $::artifactory::db_username or
     $::artifactory::db_password or
     $::artifactory::db_type) {
+
     if ($::artifactory::db_url and
         $::artifactory::db_username and
         $::artifactory::db_password and
@@ -42,13 +43,6 @@ class artifactory::config {
         mode    => '0640',
         owner   => 'artifactory',
         group   => 'artifactory',
-      }
-      # Ensuring local db works
-      file { 'java_profile':
-        ensure  => present,
-        path    => '/etc/profile.d/home.sh',
-        content => "export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.x86_64 \n export ARTIFACTORY_HOME=${::artifactory::artifactory_home}",# lint:ignore:140chars
-        owner   => 'root'
       }
 
       file { "/etc/${::artifactory::artifactory_home}/storage.properties":
@@ -84,6 +78,8 @@ class artifactory::config {
       warning('Database port, hostname, username, password and type must be all be set, or not set. Install proceeding without storage.')
     }
   }
+
+  # 
   if ($::artifactory::master_key) {
     file { "/etc/${::artifactory::artifactory_home}/security":
       ensure => directory,
@@ -99,16 +95,29 @@ class artifactory::config {
       group   => 'artifactory',
     }
   }
-  # exec { 'artifactory home':
-  #     command => "export ARTIFACTORY_HOME=${::artifactory::artifactory_home}",
-  #     path    => '/opt/jfrog/artifactory/tomcat/bin/',
-  #     user    => 'artifactory',
-  # }
-  # file_line { 'artifactory_home':0
-  #     ensure => present,
-  #     path   => '/etc/opt/jfrog/artifactory/default',
-  #     line   => "export ARTIFACTORY_HOME=${::artifactory::artifactory_home}",
-  #     match  => 'export ARTFACTORY_HOME='
-  #
-  #     }
+
+  if ($::artifactory::db_automate) and ($::artifactory::db_type == 'mysql') {
+    file_line { 'home':
+      line => "ARTIFACTORY_HOME=${::artifactory::artifactory_home}",
+      path => '/etc/environment',
+    }
+    file { 'artif_service':
+      ensure => present,
+      path   => '/lib/systemd/system/artifactory.service',
+      source => 'puppet:///modules/artifactory/artifactory.service',
+      mode   => '0755',
+    }
+    file_line { 'limits':
+      ensure => present
+      path   => '/etc/security/limits.conf',
+      line   => 'artifactory soft nofile 32000 \n artifactory hard nofile 32000',
+    }
+    file { 'artifManage':
+      ensure => present,
+      path   => '/opt/jfrog/artifactory/bin/artifactoryManage.sh',
+      source => 'puppet:///modules/artifactory/artifactoryManage.sh',
+      mode   => '0775',
+    }
+    contain ::mysql::server
+  }
 }

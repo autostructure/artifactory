@@ -15,6 +15,7 @@ class artifactory(
   Optional[String] $db_url                                                                 = undef,
   Optional[String] $db_username                                                            = undef,
   Optional[String] $db_password                                                            = undef,
+  Optional[Boolean] $db_automate                                                           = false,
   Optional[Enum['filesystem', 'fullDb', 'cachedFS', 'fullDbDirect']] $binary_provider_type = undef,
   Optional[Integer] $pool_max_active                                                       = undef,
   Optional[Integer] $pool_max_idle                                                         = undef,
@@ -49,7 +50,7 @@ class artifactory(
     -> class{'::artifactory::yum': }
     -> class{'::artifactory::install': }
     -> class{'::artifactory::config': }
-    # ~> class{'::artifactory::service': }
+    ~> class{'::artifactory::service': }
 
     # Make sure java is included
     include ::java
@@ -57,7 +58,6 @@ class artifactory(
     Class{'::artifactory::yum': }
     -> class{'::artifactory::install': }
     -> class{'::artifactory::config': }
-    # ~> class{'::artifactory::service': }
+    ~> class{'::artifactory::service': }
   }
-
 }
