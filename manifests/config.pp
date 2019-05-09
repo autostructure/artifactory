@@ -48,7 +48,7 @@ class artifactory::config {
         ensure  => present,
         path    => '/etc/profile.d/',
         content => "export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.x86_64 \n export ARTIFACTORY_HOME=${::artifactory::artifactory_home}",# lint:ignore:140chars
-        user    => 'root'
+        owner   => 'root'
       }
 
       file { "${::artifactory::artifactory_home}/etc/storage.properties":
