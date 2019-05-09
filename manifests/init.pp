@@ -49,7 +49,7 @@ class artifactory(
     -> class{'::artifactory::yum': }
     -> class{'::artifactory::install': }
     -> class{'::artifactory::config': }
-    ~> class{'::artifactory::service': }
+    # ~> class{'::artifactory::service': }
 
     # Make sure java is included
     include ::java
@@ -57,7 +57,7 @@ class artifactory(
     Class{'::artifactory::yum': }
     -> class{'::artifactory::install': }
     -> class{'::artifactory::config': }
-    ~> class{'::artifactory::service': }
+    # ~> class{'::artifactory::service': }
   }
 
 }
