@@ -43,6 +43,13 @@ class artifactory::config {
         owner   => 'artifactory',
         group   => 'artifactory',
       }
+      # Ensuring local db works
+      file { 'java_profile':
+        ensure  => present,
+        path    => '/etc/profile.d/',
+        content => "export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.x86_64 \n export ARTIFACTORY_HOME=${::artifactory::artifactory_home}",# lint:ignore:140chars
+        user    => 'root'
+      }
 
       file { "${::artifactory::artifactory_home}/etc/storage.properties":
         ensure => link,
@@ -69,7 +76,7 @@ class artifactory::config {
         file { "${::artifactory::artifactory_home}/tomcat/lib/${file_name}":
           source => $::artifactory::jdbc_driver_url,
           mode   => '0775',
-          owner  => 'artifactory',
+          owner  => 'root',
         }
       }
     }

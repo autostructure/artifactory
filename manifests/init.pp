@@ -22,7 +22,7 @@ class artifactory(
   Optional[String] $binary_provider_base_data_dir                                          = undef,
   Optional[String] $binary_provider_filesystem_dir                                         = undef,
   Optional[String] $binary_provider_cache_dir                                              = undef,
-  Optional[String] $master_key                                                             = '7640a6f2d365b6bd970ab2659882f8f6',
+  Optional[String] $master_key                                                             = undef,
 ) {
 
   $service_name = 'artifactory'
