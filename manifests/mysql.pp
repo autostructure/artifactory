@@ -6,10 +6,10 @@
     remove_default_accounts => true,
   }
 
-  mysql::db { 'mysqldb':
+  mysql::db { 'artdb':
     user     => $db_username,
     password => $db_password,
     host     => 'localhost',
     grant    => 'ALL',
   }
-  include ::mysql::server
+include ::mysql::server
