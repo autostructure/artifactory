@@ -79,7 +79,7 @@ class artifactory::config {
     }
   }
 
-  # 
+  #
   if ($::artifactory::master_key) {
     file { "/etc/${::artifactory::artifactory_home}/security":
       ensure => directory,
@@ -108,7 +108,7 @@ class artifactory::config {
       mode   => '0755',
     }
     file_line { 'limits':
-      ensure => present
+      ensure => present,
       path   => '/etc/security/limits.conf',
       line   => 'artifactory soft nofile 32000 \n artifactory hard nofile 32000',
     }
