@@ -97,6 +97,8 @@ class artifactory::config {
   }
 
   if ($::artifactory::db_automate) and ($::artifactory::db_type == 'mysql') {
+    include systemd::systemctl::daemon_reload
+
     file_line { 'home':
       line => "ARTIFACTORY_HOME=${::artifactory::artifactory_home}",
       path => '/etc/environment',
@@ -118,6 +120,7 @@ class artifactory::config {
       source => 'puppet:///modules/artifactory/artifactoryManage.sh',
       mode   => '0775',
     }
+    ~> Class['systemd::systemctl::daemon_reload']
     contain ::mysql::server
   }
 }
