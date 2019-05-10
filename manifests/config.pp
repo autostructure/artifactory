@@ -16,13 +16,13 @@ class artifactory::config {
         $::artifactory::db_type
         ) {
 
-      file { "/etc/${::artifactory::artifactory_home}.secrets":
+      file { "/etc${::artifactory::artifactory_home}/.secrets":
         ensure => directory,
         owner  => 'artifactory',
         group  => 'artifactory',
       }
 
-      file { "/etc/${::artifactory::artifactory_home}.secrets/.temp.db.properties":
+      file { "/etc${::artifactory::artifactory_home}/.secrets/.temp.db.properties":
         ensure  => file,
         content => epp(
           'artifactory/db.properties.epp',
