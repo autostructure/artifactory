@@ -1,4 +1,6 @@
 # Manages mysql server if automated
+  include '::mysql::server'
+
   class { '::mysql::server':
     package_name            => 'mariadb-server',
     package_ensure          => '5.5.60-1.el7_5',
