@@ -7,9 +7,11 @@
     remove_default_accounts => true,
   }
 
-  mysql::db { 'artdb':
-    user     => $db_username,
-    password => $db_password,
-    host     => 'localhost',
-    grant    => 'ALL',
-  }
+
+create_resources(mysql::db, hiera(mysql::server::db, {}))
+  # mysql::db { 'artdb':
+  #   user     => $db_username,
+  #   password => $db_password,
+  #   host     => 'localhost',
+  #   grant    => 'ALL',
+  # }
