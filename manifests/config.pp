@@ -50,7 +50,7 @@ class artifactory::config {
         target => "${::artifactory::artifactory_home}/etc/.secrets/.temp.db.properties",
       }
 
-      file { "/etc/${::artifasctory::artifactory_home}/binarystore.xml":
+      file { "/etc/${::artifactory::artifactory_home}/binarystore.xml":
         ensure  => file,
         content => epp(
           'artifactory/binarystore.xml.epp',
