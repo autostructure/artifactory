@@ -12,4 +12,3 @@
     host     => 'localhost',
     grant    => 'ALL',
   }
-include ::mysql::server
