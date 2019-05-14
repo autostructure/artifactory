@@ -98,6 +98,7 @@ class artifactory::config {
 
   if ($::artifactory::db_automate) and ($::artifactory::db_type == 'mysql') {
     include systemd::systemctl::daemon_reload
+    include ::mysql::server
 
     file_line { 'home':
       line => "ARTIFACTORY_HOME=${::artifactory::artifactory_home}",
