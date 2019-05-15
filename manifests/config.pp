@@ -16,13 +16,13 @@ class artifactory::config {
         $::artifactory::db_type
         ) {
 
-      file { "/etc${::artifactory::artifactory_home}/.secrets":
+      file { "${::artifactory::etc_artifactory_home}/.secrets":
         ensure => directory,
         owner  => 'artifactory',
         group  => 'artifactory',
       }
 
-      file { "/etc${::artifactory::artifactory_home}/.secrets/.temp.db.properties":
+      file { "${::artifactory::etc_artifactory_home}/.secrets/.temp.db.properties":
         ensure  => file,
         content => epp(
           'artifactory/db.properties.epp',
@@ -45,12 +45,12 @@ class artifactory::config {
         group   => 'artifactory',
       }
 
-      file { "/etc/${::artifactory::artifactory_home}/storage.properties":
+      file { "${::artifactory::etc_artifactory_home}/storage.properties":
         ensure => link,
-        target => "${::artifactory::artifactory_home}/etc/.secrets/.temp.db.properties",
+        target => "${::artifactory::etc_artifactory_home}/.secrets/.temp.db.properties",
       }
 
-      file { "/etc/${::artifactory::artifactory_home}/binarystore.xml":
+      file { "${::artifactory::etc_artifactory_home}/binarystore.xml":
         ensure  => file,
         content => epp(
           'artifactory/binarystore.xml.epp',
@@ -81,13 +81,13 @@ class artifactory::config {
 
   #
   if ($::artifactory::master_key) {
-    file { "/etc/${::artifactory::artifactory_home}/security":
+    file { "${::artifactory::etc_artifactory_home}/security":
       ensure => directory,
       owner  => 'artifactory',
       group  => 'artifactory',
     }
 
-    file { "/etc/${::artifactory::artifactory_home}/security/master.key":
+    file { "${::artifactory::etc_artifactory_home}/security/master.key":
       ensure  => file,
       content => $::artifactory::master_key,
       mode    => '0640',
