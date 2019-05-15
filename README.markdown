@@ -122,7 +122,7 @@ This is required if using a new data source.
 
 ##### `db_automate`
 
-Set to 'true' if you want Puppet to create a database (Only works with **mysql**. If `true`, we recommend using JDBC connector version 5.1.24)
+Set to 'true' if you want Puppet to create a database. Only works with **mysql**. If `true`, we recommend using JDBC connector version 5.1.24. NOTE: Puppet may throw an error the first run while it waits for Artifactory to connect to database 
 
 ##### `db_type`
 
