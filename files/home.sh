@@ -1,0 +1,1 @@
+export ARTIFACTORY_HOME=/opt/jfrog/artifactory
