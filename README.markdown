@@ -194,8 +194,6 @@ This module has been tested on:
 * RedHat Enterprise Linux 5, 6, 7
 * CentOS 5, 6, 7
 
-PLEASE NOTE that on modern installations, Artifactory's home parameter `artifactory_home` may need to be set to '/opt/jfrog/artifactory' to properly locate the necessary binaries.
-
 ## Development
 
 Since your module is awesome, other users will want to play with it. Let them know what the ground rules for contributing are.
