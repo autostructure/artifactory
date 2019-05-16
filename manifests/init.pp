@@ -10,7 +10,7 @@ class artifactory(
   String $package_name                                                                     = 'jfrog-artifactory-oss',
   String $package_version                                                                  = 'present',
   String $artifactory_home                                                                 = '/var/opt/jfrog/artifactory',
-  String $etc_artifactory_home                                                             = '/var/opt/jfrog/artifactory/etc',
+  # String $etc_artifactory_home                                                             = '/var/opt/jfrog/artifactory/etc',
   Optional[String] $jdbc_driver_url                                                        = undef,
   Optional[Enum['derby', 'mssql', 'mysql', 'oracle', 'postgresql']] $db_type               = undef,
   Optional[String] $db_url                                                                 = undef,
@@ -29,9 +29,9 @@ class artifactory(
 
   $service_name = 'artifactory'
 
-  if $artifactory_home == '/opt/jfrog/artifactory' {
-    $etc_artifactory_home = '/etc/opt/jfrog/artifactory'
-  }
+  # if $artifactory_home == '/opt/jfrog/artifactory' {
+  #   $etc_artifactory_home = '/etc/opt/jfrog/artifactory'
+  # }
 
   if ($manage_java) {
     # Ensure other open-jdk packages are removed
