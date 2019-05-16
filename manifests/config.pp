@@ -99,15 +99,6 @@ class artifactory::config {
     include systemd::systemctl::daemon_reload
     include ::artifactory::mysql
 
-    file { '/etc/profile.d/home.sh':
-      ensure => present,
-      source => 'puppet:///modules/artifactory/home.sh',
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0644',
-      # line => "ARTIFACTORY_HOME=${::artifactory::artifactory_home}",
-      # path => '/etc/environment',
-    }
     file { 'artif_service':
       ensure => present,
       path   => '/lib/systemd/system/artifactory.service',

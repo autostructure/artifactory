@@ -114,6 +114,10 @@ Tells the module whether or not to manage the java class. This defaults to true.
 
 If your organization actively manages the java installs across your environment set this to false.
 
+##### `root_password`
+
+Sets the root password for Puppet managed mysql database
+
 ##### `jdbc_driver_url`
 
 Sets the location for the jdbc driver. The built-in `file` type is used to retrieve the driver.

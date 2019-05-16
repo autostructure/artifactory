@@ -3,7 +3,7 @@ class artifactory::mysql {
   class { '::mysql::server':
     package_name            => 'mariadb-server',
     package_ensure          => '5.5.60-1.el7_5',
-    root_password           => 'password',
+    root_password           => $::artifactory::root_password,
     remove_default_accounts => true,
   }
 
