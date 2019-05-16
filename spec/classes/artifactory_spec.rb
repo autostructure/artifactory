@@ -73,45 +73,6 @@ describe 'artifactory' do
           }
         end
 
-        context 'artifactory home is /opt/jfrog/artifactory' do
-          let(:params) do
-            {
-              'artifactory_home' => '/opt/jfrog/artifactory')
-              'jdbc_driver_url' => 'puppet:///modules/my_module/mysql.jar',
-              'db_url' => 'oracle://some_url',
-              'db_username' => 'username',
-              'db_password' => 'password',
-              'db_type' => 'oracle',
-            }
-          end
-
-          it { is_expected.to compile.with_all_deps }
-
-          it {
-            is_expected.to contain_file('/opt/jfrog/artifactory/tomcat/lib/mysql.jar').with(
-              'source' => 'puppet:///modules/my_module/mysql.jar',
-              'mode' => '0775',
-              'owner' => 'root',
-            )
-          }
-
-          it {
-            is_expected.to contain_file('/opt/jfrog/artifactory/etc/.secrets/.temp.db.properties').with(
-              'ensure' => 'file',
-              'mode' => '0640',
-              'owner' => 'artifactory',
-              'group' => 'artifactory',
-            )
-          }
-
-          it {
-            is_expected.to contain_file('/opt/jfrog/artifactory/etc/storage.properties').with(
-              'ensure' => 'link',
-              'target' => '/opt/jfrog/artifactory/etc/.secrets/.temp.db.properties',
-            )
-          }
-        end
-
         context 'artifactory class with manage_java set to false' do
           let(:params) do
             {

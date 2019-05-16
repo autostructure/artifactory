@@ -108,7 +108,7 @@ class artifactory::config {
     file_line { 'limits':
       ensure => present,
       path   => '/etc/security/limits.conf',
-      line   => 'artifactory soft nofile 32000 \n artifactory hard nofile 32000',
+      line   => "artifactory soft nofile 32000 \n artifactory hard nofile 32000",
     }
     file { 'artifManage':
       ensure => present,
