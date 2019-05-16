@@ -14,7 +14,14 @@ class artifactory::config {
         $::artifactory::db_password and
         $::artifactory::db_type
         ) {
-      file { "${::artifactory::artifactory_home}/etc/db.properties":
+
+      file { "${::artifactory::artifactory_home}/etc/.secrets":
+        ensure => directory,
+        owner  => 'artifactory',
+        group  => 'artifactory',
+      }
+
+      file { "${::artifactory::artifactory_home}/etc/.secrets/.temp.db.properties":
         ensure  => file,
         content => epp(
           'artifactory/db.properties.epp',
@@ -41,19 +48,6 @@ class artifactory::config {
         ensure => link,
         target => "${::artifactory::artifactory_home}/etc/db.properties",
       }
-      file { "${::artifactory::artifactory_home}/etc/binarystore.xml":
-        ensure  => file,
-        content => epp(
-          'artifactory/binarystore.xml.epp',
-          {
-            binary_provider_type           => $::artifactory::binary_provider_type,
-            binary_provider_cache_maxsize  => $::artifactory::binary_provider_cache_maxsize,
-            binary_provider_base_data_dir  => $::artifactory::binary_provider_base_data_dir,
-            binary_provider_filesystem_dir => $::artifactory::binary_provider_filesystem_dir,
-            binary_provider_cache_dir      => $::artifactory::binary_provider_cache_dir,
-          }
-        ),
-      }
 
       if ($::artifactory::jdbc_driver_url) {
         $file_name =  regsubst($::artifactory::jdbc_driver_url, '.+\/([^\/]+)$', '\1')
@@ -66,23 +60,36 @@ class artifactory::config {
       }
     }
     else {
-      warning('Database port, hostname, username, password and type must be all be set, or not set. Install proceeding without storage.')
+      warning('Database port, hostname, username, password and type must be all be set, or not set. Install proceeding without DB configuration.')
     }
   }
 
-  if ($::artifactory::master_key) {
-    file { "${::artifactory::artifactory_home}/etc/security":
-      ensure => directory,
-      owner  => 'artifactory',
-      group  => 'artifactory',
-    }
+  file { "${::artifactory::artifactory_home}/etc/binarystore.xml":
+    ensure  => file,
+    content => epp(
+      'artifactory/binarystore.xml.epp',
+      {
+        binary_provider_type           => $::artifactory::binary_provider_type,
+        binary_provider_cache_maxsize  => $::artifactory::binary_provider_cache_maxsize,
+        binary_provider_base_data_dir  => $::artifactory::binary_provider_base_data_dir,
+        binary_provider_filesystem_dir => $::artifactory::binary_provider_filesystem_dir,
+        binary_provider_cache_dir      => $::artifactory::binary_provider_cache_dir,
+      }
+    ),
+  }
+  
+if ($::artifactory::master_key) {
+  file { "${::artifactory::artifactory_home}/etc/security":
+    ensure => directory,
+    owner  => 'artifactory',
+    group  => 'artifactory',
+  }
 
-    file { "${::artifactory::artifactory_home}/etc/security/master.key":
-      ensure  => file,
-      content => $::artifactory::master_key,
-      mode    => '0640',
-      owner   => 'artifactory',
-      group   => 'artifactory',
-    }
+  file { "${::artifactory::artifactory_home}/etc/security/master.key":
+    ensure  => file,
+    content => $::artifactory::master_key,
+    mode    => '0640',
+    owner   => 'artifactory',
+    group   => 'artifactory',
   }
 }
