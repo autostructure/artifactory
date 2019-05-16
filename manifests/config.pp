@@ -99,7 +99,7 @@ class artifactory::config {
     include systemd::systemctl::daemon_reload
     include ::artifactory::mysql
 
-    file { 'home':
+    file { '/etc/profile.d/home.sh':
       ensure => present,
       source => 'puppet:///modules/artifactory/home.sh',
       owner  => 'root',
