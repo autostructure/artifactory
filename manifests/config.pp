@@ -61,7 +61,7 @@ class artifactory::config {
       }
     }
     else {
-      warning('Database port, hostname, username, password and type must be all be set, or not set. Install proceeding without DB configuration.')
+      warning('Database port, hostname, username, password and type must be all be set, or not set. Install proceeding without DB configuration.')#lint:ignore:140chars
     }
   }
 
@@ -77,22 +77,6 @@ class artifactory::config {
         binary_provider_cache_dir      => $::artifactory::binary_provider_cache_dir,
       }
     ),
-  }
-
-  if ($::artifactory::master_key) {
-    file { "${::artifactory::artifactory_home}/etc/security":
-      ensure => directory,
-      owner  => 'artifactory',
-      group  => 'artifactory',
-    }
-
-    file { "${::artifactory::artifactory_home}/etc/security/master.key":
-      ensure  => file,
-      content => $::artifactory::master_key,
-      mode    => '0640',
-      owner   => 'artifactory',
-      group   => 'artifactory',
-    }
   }
 
   if ($::artifactory::master_key) {
