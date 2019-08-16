@@ -146,7 +146,7 @@ Only required for database configuration. The password for the database account.
 
 ##### `binary_provider_type`
 
-Optional setting for the binary storage provider. The type of database to configure for. Valid values are 'filesystem', 'fullDb', 'cachedFS', 'S3'. Defaults to 'filesystem'.
+Optional setting for the binary storage provider. The type of database to configure for. Valid values are 'filesystem', 'fullDb', 'cachedFS', 'clusterGCS', 'S3'. Defaults to 'filesystem'.
 
 ###### filesystem (default)
 This means that metadata is stored in the database, but binaries are stored in the file system. The default location is under $ARTIFACTORY_HOME/data/filestore however this can be modified.
@@ -156,6 +156,9 @@ All the metadata and the binaries are stored as BLOBs in the database, objects a
 
 ###### cachedFS
 Works the same way as filesystem but also has a binary LRU (Least Recently Used) cache for upload/download requests. Improves performance of instances with high IOPS (I/O Operations) or slow NFS access.
+
+###### clusterGCS
+This is the setting used for clustered GCS storage.
 
 ###### S3
 This is the setting used for S3 Object Storage.
@@ -186,6 +189,18 @@ Optional setting for the artifactory filestore location. If the binary.provider.
 ##### `binary_provider_cache_dir`
 
 Optional setting for the location of the cache. This should be set to your $ARTIFACTORY_HOME directory directly (not on the NFS).
+
+##### `binary_provider_credential`
+
+Optional setting for clusterGCS filestore. Your cloud storage provider authentication credential.
+
+##### `binary_provider_identity`
+
+Optional setting for clusterGCS filestore. Your cloud storage provider identity.
+
+##### `binary_provider_bucket`
+
+Optional setting for clusterGCS filestore.
 
 ##### `master_key`
 

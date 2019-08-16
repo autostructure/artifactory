@@ -2,13 +2,13 @@
       String                                                   $db_url,
       String                                                   $db_username,
       String                                                   $db_password,
-      Enum['filesystem', 'fullDb', 'cachedFS', 'fullDbDirect'] $binary_provider_type           = 'filesystem',
-      Optional[Integer]                                        $pool_max_active                = undef,
-      Optional[Integer]                                        $pool_max_idle                  = undef,
-      Optional[Integer]                                        $binary_provider_cache_maxsize  = undef,
-      Optional[String]                                         $binary_provider_base_data_dir  = undef,
-      Optional[String]                                         $binary_provider_filesystem_dir = undef,
-      Optional[String]                                         $binary_provider_cache_dir      = undef
+      Enum['filesystem', 'fullDb', 'cachedFS', 'fullDbDirect', 'clusterGCS'] $binary_provider_type  = 'filesystem',
+      Optional[Integer]                                        $pool_max_active                     = undef,
+      Optional[Integer]                                        $pool_max_idle                       = undef,
+      Optional[Integer]                                        $binary_provider_cache_maxsize       = undef,
+      Optional[String]                                         $binary_provider_base_data_dir       = undef,
+      Optional[String]                                         $binary_provider_filesystem_dir      = undef,
+      Optional[String]                                         $binary_provider_cache_dir           = undef
 | -%>
 <%-
 $db_driver = $db_type ? {
@@ -62,7 +62,8 @@ pool.max.active=<%= $pool_max_active %>
 pool.max.idle=<%= $pool_max_idle %>
 <% } -%>
 
-<% if $binary_provider_type != 'fullDbDirect' { -%>
+<% if $binary_provider_type != 'fullDbDirect'
+  and $binary_provider_type != 'clusterGCS' { -%>
 ## Determines where the actual artifacts binaries are stored. Available options:
 ## filesystem - binaries are stored in the filesystem (recommended, default)
 ## fullDb     - binaries are stored as blobs in the db, filesystem is used for caching
