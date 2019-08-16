@@ -17,13 +17,16 @@ class artifactory(
   Optional[String] $db_username                                                            = undef,
   Optional[String] $db_password                                                            = undef,
   Optional[Boolean] $db_automate                                                           = false,
-  Optional[Enum['filesystem', 'fullDb', 'cachedFS', 'fullDbDirect']] $binary_provider_type = undef,
+  Optional[Enum['filesystem', 'fullDb', 'cachedFS', 'fullDbDirect', 'clusterGCS']] $binary_provider_type = undef,
   Optional[Integer] $pool_max_active                                                       = undef,
   Optional[Integer] $pool_max_idle                                                         = undef,
   Optional[Integer] $binary_provider_cache_maxsize                                         = undef,
   Optional[String] $binary_provider_base_data_dir                                          = undef,
   Optional[String] $binary_provider_filesystem_dir                                         = undef,
   Optional[String] $binary_provider_cache_dir                                              = undef,
+  Optional[String] $binary_provider_bucket                                                 = undef,
+  Optional[String] $binary_provider_identity                                               = undef,
+  Optional[String] $binary_provider_credential                                             = undef,
   Optional[String] $master_key                                                             = undef,
 ) {
 

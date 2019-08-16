@@ -24,7 +24,7 @@ class artifactory::config {
 
       file { "${::artifactory::artifactory_home}/etc/.secrets/.temp.db.properties":
         ensure  => file,
-        content => epp(
+        content => Sensitive(epp(
           'artifactory/db.properties.epp',
           {
             db_url                         => $::artifactory::db_url,
@@ -39,7 +39,7 @@ class artifactory::config {
             binary_provider_filesystem_dir => $::artifactory::binary_provider_filesystem_dir,
             binary_provider_cache_dir      => $::artifactory::binary_provider_cache_dir,
           }
-        ),
+        )),
         mode    => '0640',
         owner   => 'artifactory',
         group   => 'artifactory',
@@ -67,7 +67,7 @@ class artifactory::config {
 
   file { "${::artifactory::artifactory_home}/etc/binarystore.xml":
     ensure  => file,
-    content => epp(
+    content => Sensitive(epp(
       'artifactory/binarystore.xml.epp',
       {
         binary_provider_type           => $::artifactory::binary_provider_type,
@@ -75,8 +75,11 @@ class artifactory::config {
         binary_provider_base_data_dir  => $::artifactory::binary_provider_base_data_dir,
         binary_provider_filesystem_dir => $::artifactory::binary_provider_filesystem_dir,
         binary_provider_cache_dir      => $::artifactory::binary_provider_cache_dir,
+        binary_provider_bucket         => $::artifactory::binary_provider_bucket,
+        binary_provider_identity       => $::artifactory::binary_provider_identity,
+        binary_provider_credential     => $::artifactory::binary_provider_credential,
       }
-    ),
+    )),
   }
 
   if ($::artifactory::master_key) {
@@ -88,7 +91,7 @@ class artifactory::config {
 
     file { "${::artifactory::artifactory_home}/etc/security/master.key":
       ensure  => file,
-      content => $::artifactory::master_key,
+      content => Sensitive($::artifactory::master_key),
       mode    => '0640',
       owner   => 'artifactory',
       group   => 'artifactory',
