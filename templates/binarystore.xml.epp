@@ -1,14 +1,18 @@
-<%- | Enum['filesystem', 'fullDb','cachedFS', 'fullDbDirect'] $binary_provider_type           = 'filesystem',
-      Optional[Integer]                                       $binary_provider_cache_maxsize  = undef,
-      Optional[String]                                        $binary_provider_base_data_dir  = undef,
-      Optional[String]                                        $binary_provider_filesystem_dir = undef,
-      Optional[String]                                        $binary_provider_cache_dir      = undef
+<%- | Enum['filesystem', 'fullDb','cachedFS', 'fullDbDirect', 'clusterGCS'] $binary_provider_type = 'filesystem',
+      Optional[Integer]                                       $binary_provider_cache_maxsize      = undef,
+      Optional[String]                                        $binary_provider_base_data_dir      = undef,
+      Optional[String]                                        $binary_provider_filesystem_dir     = undef,
+      Optional[String]                                        $binary_provider_cache_dir          = undef,
+      Optional[String]                                        $binary_provider_bucket             = undef,
+      Optional[String]                                        $binary_provider_identity           = undef,
+      Optional[String]                                        $binary_provider_credential         = undef,
 | -%>
 <%- $mapped_provider_type = $binary_provider_type ? {
   'filesystem'   => 'file-system',
   'fullDb'       => 'full-db',
   'cachedFS'     => 'cache-fs',
   'fullDbDirect' => 'full-db-direct',
+  'clusterGCS'   => 'cluster-google-storage',
 }
 -%>
 <?xml version="1.0" encoding="UTF-8"?>
@@ -38,7 +42,11 @@
   ~ If you are not sure of what you are doing, please contact JFrog Support for assistance.
   -->
 
+<% if $binary_provider_type == 'clusterGCS' { -%>
+<config version="2">
+<% } else { -%>
 <config version="1">
+<% } -%>
     <chain template="<%= $mapped_provider_type %>"/>
 <% if $binary_provider_type == 'filesystem'
     and ($binary_provider_base_data_dir or $binary_provider_filesystem_dir)
@@ -68,5 +76,13 @@
     </provider>
 <% } elsif $binary_provider_type == 'fullDbDirect' { -%>
     <provider id="blob" type="blob"/>
+<% } -%>
+<% if $binary_provider_type == 'clusterGCS' { -%>
+    <provider id="google-storage" type="google-storage">
+        <endpoint>commondatastorage.googleapis.com</endpoint>
+        <bucketName>$binary_provider_bucket</bucketName>
+        <identity>$binary_provider_identity</identity>
+        <credential>$binary_provider_credential</credential>
+    </provider>
 <% } -%>
 </config>
