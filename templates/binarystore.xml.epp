@@ -80,9 +80,9 @@
 <% if $binary_provider_type == 'clusterGCS' { -%>
     <provider id="google-storage" type="google-storage">
         <endpoint>commondatastorage.googleapis.com</endpoint>
-        <bucketName>$binary_provider_bucket</bucketName>
-        <identity>$binary_provider_identity</identity>
-        <credential>$binary_provider_credential</credential>
+        <bucketName><%= $binary_provider_bucket %></bucketName>
+        <identity><%= $binary_provider_identity %></identity>
+        <credential><%= $binary_provider_credential %></credential>
     </provider>
 <% } -%>
 </config>
